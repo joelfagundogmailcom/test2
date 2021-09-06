@@ -1,15 +1,15 @@
-
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
-
+ private $base_url0="http://alivepages.com/test2"; 
  public function __construct()
  {
   parent::__construct();
   if($this->session->userdata('id'))
   {
-   redirect('private_area');
+   @header("Location: ".$this->base_url0."/private_area");
+   die();
   }
   $this->load->library('form_validation');
   $this->load->library('encrypt');
@@ -18,30 +18,38 @@ class Login extends CI_Controller {
 
  function index()
  {
-  $this->load->view('login');
+	$this->load->view('login');
  }
 
  function validation()
  {
   $this->form_validation->set_rules('user_email', 'Email Address', 'required|trim|valid_email');
-  $this->form_validation->set_rules('user_password', 'Password', 'required');
-  if($this->form_validation->run())
-  {
+  //$this->form_validation->set_rules('user_password', 'Password', 'required');
+  //if($this->form_validation->run())
+  //{
    $result = $this->login_model->can_login($this->input->post('user_email'), $this->input->post('user_password'));
+
    if($result == '')
    {
-    redirect('private_area');
+   @header("Location: ".$this->base_url0."/private_area");
+   die();
+   
+
    }
    else
    {
     $this->session->set_flashdata('message',$result);
-    redirect('login');
+    //redirect('login');
+   @header("Location: ".$this->base_url0."/login");
+   die();
    }
-  }
+  /*}
   else
   {
-   $this->index();
-  }
+   //$this->index();
+   @header("Location: ".$this->base_url0);
+   die();
+  }*/
  }
 
 }

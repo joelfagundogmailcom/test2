@@ -14,7 +14,7 @@
   <div class="panel panel-default">
    <div class="panel-heading">Register</div>
    <div class="panel-body">
-    <form method="post" action="<?php echo base_url(); ?>register/validation">
+    <form method="post" action="https://alivepages.com/test2/register/validation">
      <div class="form-group">
       <label>Enter Your Name</label>
       <input type="text" name="user_name" class="form-control" value="<?php echo set_value('user_name'); ?>" />

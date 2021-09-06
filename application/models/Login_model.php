@@ -1,32 +1,30 @@
-
 <?php
-class Register_model extends CI_Model
+class Login_model extends CI_Model
 {
- function insert($data)
+ function can_login($email, $password)
  {
-  $this->db->insert('codeigniter_register', $data);
-  return $this->db->insert_id();
- }
-
- function verify_email($key)
- {
-  $this->db->where('verification_key', $key);
-  $this->db->where('is_email_verified', 'no');
+  $this->db->where('email', $email);
   $query = $this->db->get('codeigniter_register');
   if($query->num_rows() > 0)
   {
-   $data = array(
-    'is_email_verified'  => 'yes'
-   );
-   $this->db->where('verification_key', $key);
-   $this->db->update('codeigniter_register', $data);
-   return true;
+   foreach($query->result() as $row)
+   {
+
+     $store_password =  $this->encrypt->decode($row->password);
+     if($password == $store_password)
+     {
+      $this->session->set_userdata('id', $row->id);
+     }
+     else
+     {
+      return 'Wrong Password';
+     }
+
+   }
   }
   else
   {
-   return false;
+   return 'Wrong Email Address';
   }
  }
 }
-
-?>

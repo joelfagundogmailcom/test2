@@ -24,7 +24,7 @@
                     ';
                 }
                 ?>
-                <form method="post" action="<?php echo base_url(); ?>login/validation">
+                <form method="post" action="<?php echo "http://alivepages.com/test2/"; ?>login/validation">
                     <div class="form-group">
                         <label>Enter Email Address</label>
                         <input type="text" name="user_email" class="form-control" value="<?php echo set_value('user_email'); ?>" />
@@ -36,7 +36,7 @@
                         <span class="text-danger"><?php echo form_error('user_password'); ?></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" name="login" value="Login" class="btn btn-info" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?php echo base_url(); ?>register">Register</a>
+                        <input type="submit" name="login" value="Login" class="btn btn-info" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?php echo "http://alivepages.com/test2/"; ?>register">Register</a>
                     </div>
                 </form>
             </div>

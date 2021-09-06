@@ -3,7 +3,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Register extends CI_Controller {
-
+ private $base_url0="http://alivepages.com/test2"; // base_url();
  public function __construct()
  {
   parent::__construct();
@@ -12,7 +12,7 @@ class Register extends CI_Controller {
    redirect('private_area');
   }
   $this->load->library('form_validation');
-  $this->load->library('encrypt');
+  $this->load->library('encryption');
   $this->load->model('register_model');
  }
 
@@ -42,7 +42,7 @@ class Register extends CI_Controller {
     $subject = "Please verify email for login";
     $message = "
     <p>Hi ".$this->input->post('user_name')."</p>
-    <p>This is email verification mail from Codeigniter Login Register system. For complete registration process and login into system. First you want to verify you email by click this <a href='".base_url()."register/verify_email/".$verification_key."'>link</a>.</p>
+    <p>This is email verification mail from Codeigniter Login Register system. For complete registration process and login into system. First you want to verify you email by click this <a href='".$this->base_url0."register/verify_email/".$verification_key."'>link</a>.</p>
     <p>Once you click this link your email will be verified and you can login into system.</p>
     <p>Thanks,</p>
     ";
@@ -51,22 +51,21 @@ class Register extends CI_Controller {
      'smtp_host' => 'smtpout.secureserver.net',
      'smtp_port' => 80,
      'smtp_user'  => 'xxxxxxx', 
-                  'smtp_pass'  => 'xxxxxxx', 
+              $this->load->view('register'),  
      'mailtype'  => 'html',
      'charset'    => 'iso-8859-1',
                    'wordwrap'   => TRUE
     );
     $this->load->library('email', $config);
     $this->email->set_newline("\r\n");
-    $this->email->from('info@webslesson.info');
+    $this->email->from('info@alivepages,com');
     $this->email->to($this->input->post('user_email'));
     $this->email->subject($subject);
     $this->email->message($message);
-    if($this->email->send())
-    {
+    $this->email->send(); 
      $this->session->set_flashdata('message', 'Check in your email for email verification mail');
-     redirect('register');
-    }
+     //redirect('register');
+     @header("Location: ".$this->base_url0."/login");
    }
   }
   else
@@ -82,7 +81,7 @@ class Register extends CI_Controller {
    $verification_key = $this->uri->segment(3);
    if($this->register_model->verify_email($verification_key))
    {
-    $data['message'] = '<h1 align="center">Your Email has been successfully verified, now you can login from <a href="'.base_url().'login">here</a></h1>';
+    $data['message'] = '<h1 align="center">Your Email has been successfully verified, now you can login from <a href="'.$this->base_url0.'login">here</a></h1>';
    }
    else
    {
